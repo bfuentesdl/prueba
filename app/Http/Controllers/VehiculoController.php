@@ -8,9 +8,20 @@ use Illuminate\Http\Request;
 class VehiculoController extends Controller
 {
     
-    public function index()
+    public function index(Request $request)
     {
-         $vehiculos = Vehiculo::all();
+        $query = Vehiculo::query();
+
+        if($request->filled('marca')){
+            $query->where('marca', 'like', '%'.$request->marca.'%');
+        }
+
+        if($request->filled('modelo')){
+            $query->where('modelo', 'like', '%'.$request->modelo.'%');
+        }
+
+        $vehiculos = $query->get();
+
         return view('vehiculos.index', compact('vehiculos'));
     }
 

@@ -5,6 +5,22 @@
 @section('content')
     <a href="{{ route('vehiculos.create') }}" class="btn btn-primary mb-3">Agregar Vehículo</a>
 
+    <form method="GET" action="{{ route('vehiculos.index') }}" class="mb-3 row g-2">
+        <div class="col-md-4">
+            <input type="text" name="marca" value="{{ request('marca') }}" class="form-control" placeholder="Buscar por marca">
+        </div>
+        <div class="col-md-4">
+            <input type="text" name="modelo" value="{{ request('modelo') }}" class="form-control" placeholder="Buscar por modelo">
+        </div>
+        <div class="col-md-2">
+        <button type="submit" class="btn btn-primary w-100">Filtrar</button>
+        </div>
+        <div class="col-md-2">
+            <a href="{{ route('vehiculos.index') }}" class="btn btn-secondary w-100">Limpiar</a>
+        </div>
+    </form>
+
+
     <table class="table table-bordered">
         <thead>
             <tr>
@@ -30,10 +46,12 @@
                             @csrf
                             @method('DELETE')
                             <button class="btn btn-danger btn-sm" onclick="return confirm('¿Seguro que quieres eliminar este vehículo?')">Eliminar</button>
+                            <a href="{{ route('reservas.create') }}?vehiculo_id={{ $vehiculo->id }}" class="btn btn-success btn-sm">Reservar</a>
                         </form>
                     </td>
                 </tr>
             @endforeach
         </tbody>
     </table>
+
 @endsection
